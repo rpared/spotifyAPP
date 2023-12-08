@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spotify API Mockup</title>
+</head>
+<body>
+
+    <h1>Spotify API Mockup</h1>
+
+    <div id="playlist-container">
+        <!-- The playlist information will be displayed here -->
+    </div>
+
+    <button onclick="startPlayback()">Start Playback</button>
+
+    <script>
+        // Replace 'YOUR_ACCESS_TOKEN' with an actual access token obtained through Spotify authentication.
+        const accessToken = 'BQDF3gF-7HT9zvium_Dd7Ulr7usoy34Q4dSLn7lpG_Hmy1CY_wAY07V6Uzy55GdF1Is0g_f214YJSZqQ_6gVU1kECH3s3Fe08XL5pyyJmzkFzwB4baU';
+        
+        // Replace 'API_ENDPOINT' with the actual Spotify API endpoint you want to use.
+        const playlistsEndpoint = 'https://api.spotify.com/v1/me/playlists';
+        const startPlaybackEndpoint = 'https://api.spotify.com/v1/me/player/play';
+
+        // Function to fetch user playlists
+        function fetchPlaylists() {
+            fetch(playlistsEndpoint, {
+                headers: {
+                    'Authorization': `Bearer ${accessToken}`
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Handle the received data and update the HTML accordingly
+                const playlistContainer = document.getElementById('playlist-container');
+                
+                // Clear existing content
+                playlistContainer.innerHTML = '';
+
+                // For simplicity, let's assume the response contains an array of playlists
+                data.items.forEach(playlist => {
+                    const playlistElement = document.createElement('div');
+                    playlistElement.textContent = `Playlist: ${playlist.name}`;
+                    playlistContainer.appendChild(playlistElement);
+                });
+            })
+            .catch(error => {
+                console.error('Error fetching playlists from Spotify API:', error);
+            });
+        }
+
+        // Function to start playback on the user's active device
+        function startPlayback() {
+            fetch(startPlaybackEndpoint, {
+                method: 'PUT',
+                headers: {
+                    'Authorization': `Bearer ${accessToken}`,
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    "context_uri": "spotify:album:1Je1IMUlBXcx1Fz0WE7oPT",
+                    "uris": ["spotify:track:4iV5W9uYEdYUVa79Axb7Rh", "spotify:track:1301WleyT98MSxVHPZCA6M"],
+                    "offset": {"position": 5},
+                    "position_ms": 0
+                })
+            })
+            .then(response => {
+                if (response.ok) {
+                    console.log('Playback started successfully');
+                } else {
+                    console.error('Error starting playback:', response.status);
+                }
+            })
+            .catch(error => {
+                console.error('Error starting playback:', error);
+            });
+        }
+
+        // Fetch playlists when the page loads
+        fetchPlaylists();
+    </script>
+
+</body>
+</html>

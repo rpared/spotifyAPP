@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<!-- /*****************************************************************************
+* ITC5202  Final Project
+* We declare that this assignment is our own work in accordance with Humber Academic 
+* Policy. 
+* 
+* Group: Ryan Phil Fermin Ancheta, Jercy Tze Sie Tiong, Roger Paredes Date: 12/07/2023
+*
+ITC5202: XML and JavaScript
+*****************************************************************************/ -->
+<html lang="en" data-bs-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cool Spotify APP</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  <link rel="stylesheet" href="style.css"><!-- not using a css file for now, but it would be best if we add further styles so we can work simultaneusly -->
+  <style>
+    .left-frame {
+      min-height: 100vh;
+      border-right: 1px solid rgb(27, 88, 255);
+    }
+
+    .right-frame {
+      min-height: 100vh;
+      background-color: #464646;
+    }
+
+    h1{
+      font-weight: bold;
+    }
+
+  </style>
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  <script src="endpointsRoger.js" defer type="module"></script>
+  <script src="endpointsRyan.js" defer type="module"></script>
+  <script src="endpointsJercy.js" defer type="module"></script>
+</head>
+<body>
+
+  <div class="container-fluid">
+    <div class="row">
+      <!-- Left Frame for Buttons -->
+        <div class="col-md-3 left-frame">
+            <h1 class="mt-4 mb-5">Cool Spotify APP</h1>
+
+            <!-- Buttons to get endpoints -->
+
+            <button id="buttonUser" class="btn btn-primary">Display User</button>
+            <br><br>
+
+            <button id="buttonFav" class="btn btn-primary">Get Favorite Artist</button>
+            <br><br>
+        
+            <div class="input-group">
+                <input type="text" class="form-control" id="search-input" placeholder="Artist, album, or track">
+                
+                <select id="searchType" name="searchType" aria-labelledby="dropdownMenuButtonDark">
+                    <option value="artist">Artist</option>
+                    <option value="album">Album</option>
+                    <option value="track">Song</option>
+                </select>
+                <button class="btn btn-primary" id="buttonSearch">Search</button>
+            </div>
+            <br>
+            <button id="buttonPlaylist" class="btn btn-primary">Get Playlists</button>
+            <br><br>
+            <button id="buttonQueue" class="btn btn-primary">Get Queue</button>
+            <br><br>
+            <button id="buttonX" class="btn btn-primary">Get some other Endpoint</button>
+            <br><br>
+            <button id="buttonX1" class="btn btn-primary">Get some other Endpoint</button>
+            <br><br>
+
+            <div class="play-group">
+              <button class="btn btn-success mb-3">Play</button>
+              <button class="btn btn-success mb-3">Pause</button>
+            </div>
+            
+            <br><br>
+            <button id="buttonDevelopers" class="btn btn-primary">Get Developers</button>
+ 
+        </div>
+
+
+      <!-- Right Frame for Results  -->
+      <div class="col-md-9 right-frame">
+        <div class="container mt-5">
+          <h2>Endpoint Results:</h2>
+          <div id="result">
+            <div id="result2"></div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS and Popper.js -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+
+</body>
+</html>
