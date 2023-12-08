@@ -47,23 +47,24 @@ ITC5202: XML and JavaScript
 
             <!-- Buttons to get endpoints -->
 
+            <div class="input-group">
+              <input type="text" class="form-control" id="search-input" placeholder="Artist, album, or track">
+              
+              <select id="searchType" name="searchType" aria-labelledby="dropdownMenuButtonDark">
+                  <option value="artist">Artist</option>
+                  <option value="album">Album</option>
+                  <option value="track">Song</option>
+              </select>
+              <button class="btn btn-primary" id="buttonSearch">Search</button>
+          </div>
+          <hr>
+
             <button id="buttonUser" class="btn btn-primary">Display User</button>
             <br><br>
 
             <button id="buttonFav" class="btn btn-primary">Get Favorite Artists</button>
             <br><br>
-        
-            <div class="input-group">
-                <input type="text" class="form-control" id="search-input" placeholder="Artist, album, or track">
-                
-                <select id="searchType" name="searchType" aria-labelledby="dropdownMenuButtonDark">
-                    <option value="artist">Artist</option>
-                    <option value="album">Album</option>
-                    <option value="track">Song</option>
-                </select>
-                <button class="btn btn-primary" id="buttonSearch">Search</button>
-            </div>
-            <br>
+
             <button id="buttonPlaylist" class="btn btn-primary">Get Playlists</button>
             <br><br>
             <button id="buttonQueue" class="btn btn-primary">Get Queue</button>
