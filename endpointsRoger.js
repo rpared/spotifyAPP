@@ -32,13 +32,9 @@ $(document).ready(function(){
                     //let FavButton = `<button id="buttonFav" class="btn btn-primary" >${result.display_name} Top Tracks</button>`;
                    // $("#result").append(FavButton);
                    //Creating a button to retrieve followed artists
-                   $("#result").append(`<button id="buttonFollowing" class="btn btn-primary" >${result.display_name} Followed Artists</button>`) 
-                   $("#result").append(`<br><br>`)
+                   $("#result").append(`<br>`)
                    $("#result").append(`<button id="buttonTracks" class="btn btn-primary" >${result.display_name} Top Track</button>`)
-                   $("#buttonFollowing").on('click', function() {
-                    console.log("getFollows called");
-                    getFollows();
-                    });
+                   
                     $("#buttonTracks").on('click', function() {
                         console.log("getTopTrack called");
                         getTopTrack();
@@ -51,20 +47,65 @@ $(document).ready(function(){
             });
     });
 /////Followed Artists Endpoint  
-    let getFollows = () => {
-        $.ajax({
-            url: 'https://api.spotify.com/v1/me/following?type=tracks',
-            headers: {Authorization: "Bearer " + accessToken,},
-            success: function (response) {
-                console.log('Followed artists:', response);
-                // add to html
-            },
-            error: function (status, error) {
-                console.error('Error fetching followed artists:', status, error);
-                alert('Followed Artists request failed!', status, error);
-            }
-        });
-    };
+
+$("#buttonFollowers").on('click', function() {
+    console.log("getFollows called");
+    getFollows();
+    });
+
+let getFollows = () => {
+    $.ajax({
+        url: 'https://api.spotify.com/v1/me/following?type=artist',
+        headers: { Authorization: "Bearer " + accessToken },
+        success: function (response) {
+            console.log('Followed artists:', response);
+            $("#result").empty();
+            // Create a container div for all artist cards
+            let followingsDiv = $("<div>").css({
+                display: "flex",
+                flexWrap: "wrap",
+                justifyContent: "left"
+            });
+
+            response.artists.items.forEach(artist => {
+                // Create a div for each artist card
+                const artistCard = $("<div>").addClass('artist-card');
+
+                // Artist Name
+                const nameElement = $("<h3>").text(artist.name);
+
+                // Artist Image
+                const imageElement = $("<img>").attr({
+                    src: artist.images[0].url,
+                    alt: artist.name,
+                    style: 'width: 150px',
+                });
+
+                // Followers Count
+                const followersElement = $("<p>").text(`Followers: ${artist.followers.total}`);
+
+                // Genres
+                const genresElement = $("<p>").text(`Genre: ${artist.genres[0]}`);
+
+                // Append elements to the artist card
+                artistCard.append(nameElement, imageElement, followersElement, genresElement);
+
+                // Append artist card to the container
+                followingsDiv.append(artistCard);
+            });
+
+            // Append the container to the result element
+            $("#result").append(followingsDiv);
+        },
+        error: function (status, error) {
+            console.error('Error fetching followed artists:', status, error);
+            alert('Followed Artists request failed!', status, error);
+        }
+    });
+};
+
+
+
 /////Favorite Track Endpoint
     let getTopTrack = () => {
             $.ajax({
