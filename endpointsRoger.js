@@ -31,14 +31,18 @@ $(document).ready(function(){
                     $("#result").html("<br>" + result.display_name + "<br>" + "Country: " + result.country + "<br><br>");
                     //let FavButton = `<button id="buttonFav" class="btn btn-primary" >${result.display_name} Top Tracks</button>`;
                    // $("#result").append(FavButton);
-                   //Creating a button to retrieve tracks
-                   $("#result").append(`<button id="buttonTop" class="btn btn-primary" >${result.display_name} Top Tracks</button>`) 
-
-                   $("#buttonTop").on('click', function() {
-                    console.log("getFavs called");
-                    
-                    getFavs();
-                });
+                   //Creating a button to retrieve followed artists
+                   $("#result").append(`<button id="buttonFollowing" class="btn btn-primary" >${result.display_name} Followed Artists</button>`) 
+                   $("#result").append(`<br><br>`)
+                   $("#result").append(`<button id="buttonTracks" class="btn btn-primary" >${result.display_name} Top Track</button>`)
+                   $("#buttonFollowing").on('click', function() {
+                    console.log("getFollows called");
+                    getFollows();
+                    });
+                    $("#buttonTracks").on('click', function() {
+                        console.log("getTopTrack called");
+                        getTopTrack();
+                        });
 
                 },
                 error: function() {
@@ -46,22 +50,69 @@ $(document).ready(function(){
                 }
             });
     });
-
-    let getFavs = () => {
+    
+    let getFollows = () => {
         $.ajax({
-            url: 'https://api.spotify.com/v1/me/top/tracks',
-            headers: {
-                Authorization: "Bearer " + accessToken,
+            url: 'https://api.spotify.com/v1/me/following?type=tracks',
+            headers: {Authorization: "Bearer " + accessToken,},
+            success: function (response) {
+                console.log('Followed artists:', response);
+                // add to html
             },
-            success: function (topResult) {
-                console.log(topResult);
-                // Process the top tracks data and update your UI as needed
-            },
-            error: function () {
-                alert('Top tracks request failed!');
+            error: function (status, error) {
+                console.error('Error fetching followed artists:', status, error);
+                alert('Followed Artists request failed!', status, error);
             }
         });
     };
+
+        let getTopTrack = () => {
+            $.ajax({
+                url: 'https://api.spotify.com/v1/me/top/tracks',
+                headers: {Authorization: "Bearer " + accessToken ,},
+                success: function (response) {
+                    console.log('Top Tracks:', response);
+                    let items = response.items;
+
+                if (items.length > 0) {
+                    let firstItem = items[0];
+                    let album = firstItem.album;
+                    let artists = album.artists;
+                    let trackName = firstItem.name;
+                    let trackURL = firstItem.preview_url;
+
+                    if (artists.length > 0) {
+                        
+                        let firstArtist = artists[0];
+                        let artistName = firstArtist.name;
+                        let artistExternalUrl = firstArtist.external_urls.spotify;
+                        let albumExternalUrl = album.external_urls.spotify;
+                        let albumImage = album.images.length > 0 ? album.images[0].url : '';
+
+                        // Display the extracted information in the HTML
+                        let htmlContent = `
+                        <br><br>
+                            <div>
+                                <h4>Track Name: ${trackName}</h4>
+                                <p>Artist Name: ${artistName}</p>
+                                <p>Track External URL: <a href="${trackURL}" target="_blank">${trackURL}</a></p>
+                                <p>Artist External URL: <a href="${artistExternalUrl}" target="_blank">${artistExternalUrl}</a></p>
+                                <p>Album External URL: <a href="${albumExternalUrl}" target="_blank">${albumExternalUrl}</a></p>
+                                <img src="${albumImage}" alt="Album Image" width="200">
+                            </div>
+                        `;
+                        // Append the HTML content to an element with the ID 'result'
+                        $("#result").append(htmlContent);
+                    }
+                }
+                },
+                error: function () {
+                    
+                    alert('Top Tracks request failed!');
+                }
+            });
+    };
+
 /////Favorite Artist Endpoint
     let artistName = 'Batushka';
         
