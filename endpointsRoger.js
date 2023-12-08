@@ -61,6 +61,7 @@ let getFollows = () => {
             console.log('Followed artists:', response);
             $("#result").empty();
             // Create a container div for all artist cards
+            $("#result").append('<h3>Artists Followed</h3>');
             let followingsDiv = $("<div>").css({
                 display: "flex",
                 flexWrap: "wrap",
@@ -449,7 +450,7 @@ $('#buttonFav').on('click', function(){
                             let playlistId = playlist.id;
                                
                             // Add playlist information to the container
-                            container.append(`<h2>${playlistName}</h2>`);
+                            container.append(`<h3>${playlistName}</h3>`);
                             container.append(`<p>Description: ${playlistDescription}</p>`);
                             container.append(`<p><a href="${playlistUrl}" target="_blank">Open on Spotify</a></p>`);
                             container.append(`<img src="${playlistImageUrl}" alt="${playlistName}" width="300" height="300">`);
