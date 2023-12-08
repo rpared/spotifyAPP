@@ -199,7 +199,7 @@ $('#buttonFav').on('click', function(){
     });
 });
 
-/////Favorite Set Artist Endpoint
+/////Defined Artist Endpoint
     let artistName = 'Batushka';
         
     $('#buttonFav1').on('click', function(){
@@ -385,7 +385,7 @@ $('#buttonFav').on('click', function(){
 
 
         
-/////Get Queue Endpoint
+/////Get Queue Endpoint > NOT WORKINIG!
         $('#buttonQueue').on('click', function(){
             let url = `https://api.spotify.com/v1/me/player/queue`;
                 $.ajax({
@@ -459,8 +459,11 @@ $('#buttonFav').on('click', function(){
                         //Creating a button to retrieve tracks
                             container.append(`<button class="btn btn-primary buttonTracks" data-playlist-id="${playlistId}">Get Tracks</button>`) 
                             container.append(`<br><br>`);
-                            let playlistInfoDiv = document.createElement("div");
-                                container.append(playlistInfoDiv);
+                           // let playlistInfoDivId = `playlistInfo_${playlistId}`;
+                            let playlistInfoDiv = document.createElement("div")
+                            playlistInfoDiv.id = playlistId;
+                            //playlistInfoDiv.id = playlistInfoDivId;
+                            container.append(playlistInfoDiv);
 
                             $('.buttonTracks').on('click', function() {
                                 console.log("getTracks called");
@@ -488,9 +491,10 @@ $('#buttonFav').on('click', function(){
             headers: { Authorization: "Bearer " + accessToken, },
             success: function (result) {
                 console.log(result);
-                let container = $('#result');
-    
-                //let playlistInfoDiv = document.createElement("div");
+
+                
+                //playlistInfoDiv.empty(); // Clear existing content
+                
                 playlistInfoDiv.style.display = "flex"; // Flexbox
                 playlistInfoDiv.style.flexWrap = "wrap";
                 playlistInfoDiv.style.justifyContent = "left";
@@ -546,7 +550,7 @@ $('#buttonFav').on('click', function(){
     
                     playlistInfoDiv.appendChild(trackInfo);
                 });
-                /*Not working
+                /*Not working!!!!
                     // A button to clear tracklist
                     let clearButton1 = $('<br> <button id="buttonClear1">Clear</button>');
                     playlistInfoDiv.append(clearButton1);
