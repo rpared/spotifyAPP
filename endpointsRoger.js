@@ -50,7 +50,7 @@ $(document).ready(function(){
                 }
             });
     });
-    
+/////Followed Artists Endpoint  
     let getFollows = () => {
         $.ajax({
             url: 'https://api.spotify.com/v1/me/following?type=tracks',
@@ -65,8 +65,8 @@ $(document).ready(function(){
             }
         });
     };
-
-        let getTopTrack = () => {
+/////Favorite Track Endpoint
+    let getTopTrack = () => {
             $.ajax({
                 url: 'https://api.spotify.com/v1/me/top/tracks',
                 headers: {Authorization: "Bearer " + accessToken ,},
@@ -113,10 +113,54 @@ $(document).ready(function(){
             });
     };
 
-/////Favorite Artist Endpoint
+////Top Artist Endpoint
+$('#buttonFav').on('click', function(){
+    let url = `https://api.spotify.com/v1/me/top/artists`;
+    $.ajax({
+        url: url,
+        headers: {Authorization: "Bearer " + accessToken,},
+        success: function(result) {
+            $("#result").empty();
+            const artists = result.items;
+
+            artists.forEach((artist, index) => {
+                const artistName = artist.name;
+                const artistExternalUrl = artist.external_urls.spotify;
+                const genres = artist.genres;
+                const artistImage = artist.images.length > 0 ? artist.images[0].url : '';
+                const albums = artist.albums; // Assuming there is an 'albums' property in the artist object
+            
+                // Display the extracted information in the HTML
+                const favArtist = `
+                    <div>
+                        <h2>Artist ${index + 1}</h2>
+                        <p>Artist Name: ${artistName}</p>
+                        <p>Artist External URL: <a href="${artistExternalUrl}" target="_blank">${artistExternalUrl}</a></p>
+                        <p>Genres: ${genres.join(', ')}</p>
+                        <img src="${artistImage}" alt="Artist Image" width="200">
+                    </div>
+                    
+                    
+                `;
+                
+                $("#result").append(favArtist);
+            });
+      
+
+
+
+            
+        },
+        error: function () {
+            alert('Request failed!');
+        }
+    });
+});
+
+/////Favorite Set Artist Endpoint
     let artistName = 'Batushka';
         
-    $('#buttonFav').on('click', function(){
+    $('#buttonFav1').on('click', function(){
         let url = `https://api.spotify.com/v1/search?q=${artistName}&type=artist`;
         $.ajax({
             url: url,
