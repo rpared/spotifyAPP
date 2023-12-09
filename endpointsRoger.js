@@ -14,8 +14,8 @@ $(document).ready(function(){
         return results[1] || 0;
         }
     };
-    let access_token = $.urlParam("access_token");
-    let accessToken = access_token;
+    let accessToken = $.urlParam("access_token");
+
 
 /////User info Endpoint
     $('#buttonUser').on('click', function(){
@@ -28,11 +28,8 @@ $(document).ready(function(){
                 success: function(result) {
                     console.log(result);
                     $("#result").html("<br>" + result.display_name + "<br>" + "Country: " + result.country + "<br><br>");
-                    //let FavButton = `<button id="buttonFav" class="btn btn-primary" >${result.display_name} Top Tracks</button>`;
-                   // $("#result").append(FavButton);
-                   //Creating a button to retrieve followed artists
-                   $("#result").append(`<br>`)
-                   $("#result").append(`<button id="buttonTracks" class="btn btn-primary" >${result.display_name} Top Track</button>`)
+                    $("#result").append(`<br>`)
+                    $("#result").append(`<button id="buttonTracks" class="btn btn-primary" >${result.display_name} Top Track</button>`)
                    
                     $("#buttonTracks").on('click', function() {
                         console.log("getTopTrack called");
@@ -70,10 +67,8 @@ let getFollows = () => {
             response.artists.items.forEach(artist => {
                 // Create a div for each artist card
                 const artistCard = $("<div>").addClass('artist-card');
-
                 // Artist Name
                 const nameElement = $("<h3>").text(artist.name);
-
                 // Artist Image
                 const imageElement = $("<img>").attr({
                     src: artist.images[0].url,
@@ -83,14 +78,10 @@ let getFollows = () => {
 
                 // Followers Count
                 const followersElement = $("<p>").text(`Followers: ${artist.followers.total}`);
-
                 // Genres
                 const genresElement = $("<p>").text(`Genre: ${artist.genres[0]}`);
-
-                // Append elements to the artist card
                 artistCard.append(nameElement, imageElement, followersElement, genresElement);
-
-                // Append artist card to the container
+                // Appending artist card to the container
                 followingsDiv.append(artistCard);
             });
 
@@ -121,7 +112,6 @@ let getFollows = () => {
                     let trackURL = firstItem.preview_url;
 
                     if (artists.length > 0) {
-                        
                         let firstArtist = artists[0];
                         let artistName = firstArtist.name;
                         let artistExternalUrl = firstArtist.external_urls.spotify;
@@ -129,8 +119,7 @@ let getFollows = () => {
                         let albumImage = album.images.length > 0 ? album.images[0].url : '';
 
                         // Display the extracted information in the HTML
-                        let htmlContent = `
-                        <br><br>
+                        let htmlContent = `<br><br>
                             <div>
                                 <h4>Track Name: ${trackName}</h4>
                                 <p>Artist Name: ${artistName}</p>
@@ -603,7 +592,7 @@ $('#buttonFav').on('click', function(){
                                 containerDevs.append('<p>' + member + '</p>');
                             });
                     },
-                    error: function (xhr, status, error) {
+                    error: function (status, error) {
                         console.error("Error loading JSON:", status, error);
                     }
                 });
