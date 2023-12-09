@@ -7,3 +7,14 @@ h2{
     color:rgb(67, 174, 255);
     
 }
+
+.artist-card{
+    margin: 6px;
+    padding: 10px;
+    width: 180px;
+    max-width: 180px;
+    height: 350px;
+    text-align: center;
+    background-color: #222222;
+    border-radius: 5px;
+}
