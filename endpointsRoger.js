@@ -457,18 +457,23 @@ $('#buttonFav').on('click', function(){
                             container.append(`<br><br>`);
                         
                         //Creating a button to retrieve tracks
-                            container.append(`<button class="btn btn-primary buttonTracks" data-playlist-id="${playlistId}">Get Tracks</button>`) 
+                            container.append(`<button class="btn btn-primary" id="${playlistId}" data-playlist-id="${playlistId}">Get Tracks</button>`) 
                             container.append(`<br><br>`);
                            // let playlistInfoDivId = `playlistInfo_${playlistId}`;
                             let playlistInfoDiv = document.createElement("div")
+
                             playlistInfoDiv.id = playlistId;
                             //playlistInfoDiv.id = playlistInfoDivId;
                             container.append(playlistInfoDiv);
+                            console.log(playlistInfoDiv);
+                            
 
-                            $('.buttonTracks').on('click', function() {
+                            $('#'+playlistId).on('click', function() {
                                 console.log("getTracks called");
                                 let playlistId = $(this).data('playlist-id');
-                                
+                                //const targetButton = container.querySelector(`button[data-playlist-id="${playlistId}"]`);
+                                //container.insertBefore(playlistInfoDiv, targetButton.nextSibling);
+                                console.log(playlistId);
                                 getTracks(playlistId, playlistInfoDiv);
 
                             });
@@ -491,9 +496,10 @@ $('#buttonFav').on('click', function(){
             headers: { Authorization: "Bearer " + accessToken, },
             success: function (result) {
                 console.log(result);
-
-                
-                //playlistInfoDiv.empty(); // Clear existing content
+                //let playlistInfoDiv = document.createElement("div")
+                //const targetButton = container.querySelector(`button[data-playlist-id="${playlistId}"]`);
+                                //container.insertBefore(playlistInfoDiv, targetButton.nextSibling);
+                playlistInfoDiv.innerHTML = ''; // Clear existing content
                 
                 playlistInfoDiv.style.display = "flex"; // Flexbox
                 playlistInfoDiv.style.flexWrap = "wrap";
@@ -550,14 +556,20 @@ $('#buttonFav').on('click', function(){
     
                     playlistInfoDiv.appendChild(trackInfo);
                 });
+                
                 /*Not working!!!!
                     // A button to clear tracklist
-                    let clearButton1 = $('<br> <button id="buttonClear1">Clear</button>');
+                    let clearButton1 = `<button id="buttonClear1">Clear</button>`;
                     playlistInfoDiv.append(clearButton1);
                     $("#buttonClear1").on("click", function(){
                         playlistInfoDiv.empty();
                     });
-                */
+                 */   
+
+
+
+
+                
             },
             error: function () {
                 alert('Request failed!');
