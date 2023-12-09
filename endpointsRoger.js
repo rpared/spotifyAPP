@@ -160,35 +160,30 @@ $('#buttonFav').on('click', function(){
         headers: {Authorization: "Bearer " + accessToken,},
         success: function(result) {
             $("#result").empty();
-            const artists = result.items;
+            let artists = result.items;
 
             artists.forEach((artist, index) => {
-                const artistName = artist.name;
-                const artistExternalUrl = artist.external_urls.spotify;
-                const genres = artist.genres;
-                const artistImage = artist.images.length > 0 ? artist.images[0].url : '';
-                const albums = artist.albums; // Assuming there is an 'albums' property in the artist object
+                let artistName = artist.name;
+                let artistExternalUrl = artist.external_urls.spotify;
+                let genres = artist.genres;
+                let artistImage = artist.images.length > 0 ? artist.images[0].url : '';
+                let albums = artist.albums; // Not using this
             
-                // Display the extracted information in the HTML
-                const favArtist = `
+                let favArtist = `
+                <hr>
                     <div>
-                        <h2>Artist ${index + 1}</h2>
+                        <h3>Artist ${index + 1}</h3>
                         <p>Artist Name: ${artistName}</p>
                         <p>Artist External URL: <a href="${artistExternalUrl}" target="_blank">${artistExternalUrl}</a></p>
                         <p>Genres: ${genres.join(', ')}</p>
                         <img src="${artistImage}" alt="Artist Image" width="200">
                     </div>
-                    
-                    
+   
                 `;
                 
                 $("#result").append(favArtist);
             });
-      
-
-
-
-            
+    
         },
         error: function () {
             alert('Request failed!');
@@ -603,7 +598,7 @@ $('#buttonFav').on('click', function(){
                     success: function(result) {
                         let containerDevs = $('#result');
                         containerDevs.empty(); // Clear previous results
-                        
+                        containerDevs.append('<h3>Developers:</h3>');
                             result.developers.forEach(function (member) {
                                 containerDevs.append('<p>' + member + '</p>');
                             });
