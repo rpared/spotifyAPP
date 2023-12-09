@@ -1,5 +1,5 @@
 $(document).ready(function(){
-    //To be changed every 3600 secs!!!!!!!! This sucks!!!!! 
+    //Token be changed every 3600 secs? This sucks!!!!! > Magical function and code on index.html solve it!
     //const token = 'BQBHPRB5PXOEplS21WJ1BQ4gHfWaLuogDHwBYOvUyckA21xaWRLRSHPsQoAxPhGOLtaFM3pB1znp-mEGRzHxhRPKxC-mDj9Bpssa4mTT2NNqtDyi8FQ';
 
 
@@ -16,7 +16,6 @@ $(document).ready(function(){
     };
     let access_token = $.urlParam("access_token");
     let accessToken = access_token;
-
 
 /////User info Endpoint
     $('#buttonUser').on('click', function(){
@@ -46,8 +45,8 @@ $(document).ready(function(){
                 }
             });
     });
-/////Followed Artists Endpoint  
 
+/////Followed Artists Endpoint  
 $("#buttonFollowers").on('click', function() {
     console.log("getFollows called");
     getFollows();
@@ -104,8 +103,6 @@ let getFollows = () => {
         }
     });
 };
-
-
 
 /////Favorite Track Endpoint
     let getTopTrack = () => {
@@ -300,7 +297,7 @@ $('#buttonFav').on('click', function(){
         });
 
         function displaySearchResults(response, type) {
-            var resultsContainer = $("#result");
+            let resultsContainer = $("#result");
             resultsContainer.empty();
             let searchType = type;
 
@@ -308,17 +305,25 @@ $('#buttonFav').on('click', function(){
                 if (response.artists && response.artists.items.length > 0) {
                     let resultTitle = $("<h3>").html( " Artists search results: ");       
                     resultsContainer.append(resultTitle);
-                    var artists = response.artists.items;
+                    let artists = response.artists.items;
                     
                     artists.forEach(function (artist) {
-                        var artistName = artist.name;
-                        var artistPopularity = artist.popularity;//not using this
+                        let artistName = artist.name;
+                        let artistPopularity = artist.popularity;//not using this
+                         
+                        let artistLink = $("<a>")
+                        .attr("href", artist.external_urls.spotify)
+                        .attr("target", "_blank")
+                        .html(artistName)
+                        //.css("text-decoration", "none")
+                        .css("color", "white")
+                        .css("text-Decoration", "none");
         
-                        let resultItem = $("<div>").html( " - " + artistName);       
-                        resultsContainer.append(resultItem);
+                    let resultItem = $("<div>").html(" - ").append(artistLink);
+                    resultsContainer.append(resultItem);;
 
                     });
-                    let clearButton = '<br> <button id="buttonClear">Clear</button>';
+                    let clearButton = '<br> <button id="buttonClear" class="btn btn-primary" >Clear</button>';
                     resultsContainer.append(clearButton);
                     $("#buttonClear").on("click", function(){
                         resultsContainer.empty();
@@ -339,11 +344,23 @@ $('#buttonFav').on('click', function(){
                     albums.forEach(function (record) {
                         let albumName = record.name;
                         let albumArtist = record.artists[0].name;
-                        let resultItem = $("<div>").html( " - " + albumName + "<em> by: " +albumArtist + "</em>");       
+
+                        let albumLink = $("<a>")
+                        .attr("href", record.external_urls.spotify)
+                        .attr("target", "_blank")
+                        .html(albumName)
+                        //.css("text-decoration", "none")
+                        .css("color", "white")
+                        .css("text-Decoration", "none");
+
+                        
+                        let resultItem = $("<div>").html(" - " + "<em> by: " + albumArtist + "</em>");
+                        resultItem.prepend(albumLink);
+                        resultItem.prepend("- ");
                         resultsContainer.append(resultItem);
 
                     });
-                    let clearButton = ' <br> <button id="buttonClear">Clear</button>';
+                    let clearButton = ' <br> <button id="buttonClear" class="btn btn-primary" >Clear</button>';
                     resultsContainer.append(clearButton);
                     $("#buttonClear").on("click", function(){
                         resultsContainer.empty();
@@ -360,15 +377,23 @@ $('#buttonFav').on('click', function(){
                     resultsContainer.append(resultTitle);
                     let tracks = response.tracks.items;
                     
-                    
                     tracks.forEach(function (song) {
                         let songName = song.name;
                         let songArtist = song.artists[0].name;
-                        let resultItem = $("<div>").html( " - " + songName + "<em> by: " + songArtist + "</em>");       
+                        let songLink = $("<a>")
+                        .attr("href", song.external_urls.spotify)
+                        .attr("target", "_blank")
+                        .html(songName)
+                        .css("color", "white")
+                        .css("text-Decoration", "none");
+
+                        let resultItem = $("<div>").html( " - " + "<em> by: " + songArtist + "</em>");
+                        resultItem.prepend(songLink);
+                        resultItem.prepend(" - ");      
                         resultsContainer.append(resultItem);
 
                     });
-                    let clearButton = '<br> <button id="buttonClear">Clear</button>';
+                    let clearButton = '<br> <button id="buttonClear" class="btn btn-primary" >Clear</button>';
                     resultsContainer.append(clearButton);
                     $("#buttonClear").on("click", function(){
                         resultsContainer.empty();
@@ -378,14 +403,12 @@ $('#buttonFav').on('click', function(){
                     resultsContainer.text("No results found.");
                     }
             }
-
-            
             
         }
 
 
         
-/////Get Queue Endpoint > NOT WORKINIG!
+/////Get Queue Endpoint > NOT USED!
         $('#buttonQueue').on('click', function(){
             let url = `https://api.spotify.com/v1/me/player/queue`;
                 $.ajax({
@@ -488,7 +511,6 @@ $('#buttonFav').on('click', function(){
         });
         
     //////GET tracks from a playlist  
-
     function getTracks(playlistId, playlistInfoDiv) {
         let url = `https://api.spotify.com/v1/playlists/${playlistId}/tracks`;
         $.ajax({
@@ -496,10 +518,8 @@ $('#buttonFav').on('click', function(){
             headers: { Authorization: "Bearer " + accessToken, },
             success: function (result) {
                 console.log(result);
-                //let playlistInfoDiv = document.createElement("div")
-                //const targetButton = container.querySelector(`button[data-playlist-id="${playlistId}"]`);
-                                //container.insertBefore(playlistInfoDiv, targetButton.nextSibling);
-                playlistInfoDiv.innerHTML = ''; // Clear existing content
+
+                playlistInfoDiv.innerHTML = ''; // To Clear existing content
                 
                 playlistInfoDiv.style.display = "flex"; // Flexbox
                 playlistInfoDiv.style.flexWrap = "wrap";
@@ -534,7 +554,6 @@ $('#buttonFav').on('click', function(){
     
                     imagesContainer.appendChild(img);
                     trackInfo.appendChild(imagesContainer);
-
     
                     // Track Name Artist and ALbum
                     let trackName = document.createElement("p");
@@ -565,11 +584,7 @@ $('#buttonFav').on('click', function(){
                         playlistInfoDiv.empty();
                     });
                  */   
-
-
-
-
-                
+  
             },
             error: function () {
                 alert('Request failed!');
@@ -578,8 +593,6 @@ $('#buttonFav').on('click', function(){
         });
     };
     
-
-
 
     /////Get Developers of this app
         $('#buttonDevelopers').on('click', function(){
