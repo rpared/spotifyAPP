@@ -20,13 +20,12 @@
     <div class="container">
       <div id="login">
         <h1>Using the Implicit Grant flow to Log in</h1>
+        <p>Remember to set up the URI ../app.html in your Spotify App settings first!</p>
+        <label for="input-userid">Enter your Spotify developer client ID: </label>
+        <input type="text" id="input-userid" placeholder="99xx99xxx99999xx9xxx999x9x99x9x9" size="35" >
+        <br>
         <button id="login-button" class="btn btn-primary">Log in with Spotify</button>
         
-        <select name="username" id="username">
-          <option value="roger">Roger</option>
-          <option value="ryan">Ryan</option>
-          <option value="jercy">Jercy</option>
-        </select>
         
       </div>
       <div id="loggedin">
@@ -135,21 +134,16 @@
               $('#login').show();
               $('#loggedin').hide();
           }
-          let username = document.querySelector('#username');
+
           let client_id;
           document.getElementById('login-button').addEventListener('click', function() {
-            if (username.value == "roger"){
-              client_id = '34db65ddb39842ad8afc373d2f19c5d2'; // Your client id
-            }else if (username.value == "ryan"){
-              client_id = 'c0818b658702405ea1d2bf3526458d84'; // Your client id
-            }else if (username.value == "jercy"){
-              client_id = 'd7ad42709c3c4d998dbb7dd7a98c2a18'; // Your client id
-            }
 
+            client_id = $('#input-userid').val();;
+            console.log(client_id);
 
-            
-           // var redirect_uri = 'http://127.0.0.1:5500/app.html'; // Your redirect uri
-            var redirect_uri = 'https://rpared.github.io/spotifyAPP/app.html'; // Your redirect uri
+            //var redirect_uri = 'http://127.0.0.1:5500/app.html'; // Local redirect uri
+
+            var redirect_uri = 'https://rpared.github.io/spotifyAPP/app.html'; // ONline uri
 
             var state = generateRandomString(16);
 
