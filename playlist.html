@@ -1,85 +1,183 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-bs-theme="dark">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Spotify API Mockup</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cool Spotify APP</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .left-frame {
+      min-height: 100vh;
+      background-color: #121212;
+      color: white;
+      padding: 20px;
+      border-right: 1px solid #282828;
+    }
+
+    .right-frame {
+      min-height: 100vh;
+      background-color: #181818;
+      color: white;
+      padding: 20px;
+    }
+
+    h1{
+      font-weight: bold;
+      font-family: 'Roboto', sans-serif;
+    }
+
+    .btn-primary {
+      background-color: #1DB954;
+      border-color: #1DB954;
+    }
+
+    .btn-primary:hover {
+      background-color: #1ed760;
+      border-color: #1ed760;
+    }
+
+    .input-group {
+      margin-bottom: 20px;
+    }
+
+    .play-group img {
+      width: 25px;
+      height: 25px;
+    }
+
+    .home-button {
+      display: flex;
+      align-items: center;
+      padding: 10px;
+      cursor: pointer;
+    }
+
+    .home-button img {
+      width: 24px;
+      height: 24px;
+      margin-right: 10px;
+    }
+
+    .home-button:hover {
+      background-color: #333333;
+      border-radius: 5px;
+    }
+
+    .library-placeholder {
+      margin-top: 20px;
+    }
+  </style>
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  <script src="endpointsRoger.js" defer type="module"></script>
+  <script src="endpointsRyanAndJercy.js" defer type="module"></script>
 </head>
 <body>
 
-    <h1>Spotify API Mockup</h1>
+  <div class="container-fluid">
+    <div class="row">
+      <!-- Left Frame for Buttons -->
+      <div class="col-md-3 left-frame">
+        <h1 class="mt-4 mb-5">Cool Spotify APP</h1>
 
-    <div id="playlist-container">
-        <!-- The playlist information will be displayed here -->
+        <!-- Home Button -->
+        <div class="home-button" id="homeButton">
+          <img src="home_icon.png" alt="Home">
+          <span>Home</span>
+        </div>
+        <hr>
+
+        <!-- Buttons to get endpoints -->
+        <div class="input-group">
+          <input type="text" class="form-control" id="search-input" placeholder="Artist, album, or track">
+          <select id="searchType" name="searchType" class="form-select">
+              <option value="artist">Artist</option>
+              <option value="album">Album</option>
+              <option value="track">Song</option>
+          </select>
+          <button class="btn btn-primary" id="buttonSearch">Search</button>
+        </div>
+        <hr>
+
+        <!-- <button id="buttonUser" class="btn btn-primary mb-3">Display User</button>
+        <button id="buttonFollowers" class="btn btn-primary mb-3">Get Artists Followed</button>
+        <button id="buttonFav" class="btn btn-primary mb-3">Get Favorite Artists</button>
+        <button id="buttonPlaylist" class="btn btn-primary mb-3">Get Playlists</button>
+
+        <div class="play-group">
+            <button class="btn btn-success mb-3" id="buttonPlay">
+              <img src="p.png" alt="Play" />
+            </button>
+            <button class="btn btn-success mb-3" id="buttonPause">
+              <img src="pa.png" alt="Pause" />
+            </button>
+            <button class="btn btn-success mb-3" id="buttonSeek">
+              <img src="ten.png" alt="Seek" />
+            </button>
+        </div>
+
+        <button id="buttonDevelopers" class="btn btn-primary">Get Developers</button>
+      </div> -->
+
+      <!-- Right Frame for Results  -->
+      <div class="col-md-9 right-frame">
+        <div class="container mt-5">
+          <div class="library-placeholder" id="libraryPlaceholder">
+            <!-- Library data will be fetched and displayed here -->
+          </div>
+          <h2>Endpoint Results:</h2>
+          <div id="result">
+            <div id="result2"></div>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
 
-    <button onclick="startPlayback()">Start Playback</button>
-
-    <script>
-        // Replace 'YOUR_ACCESS_TOKEN' with an actual access token obtained through Spotify authentication.
-        const accessToken = 'BQDF3gF-7HT9zvium_Dd7Ulr7usoy34Q4dSLn7lpG_Hmy1CY_wAY07V6Uzy55GdF1Is0g_f214YJSZqQ_6gVU1kECH3s3Fe08XL5pyyJmzkFzwB4baU';
-        
-        // Replace 'API_ENDPOINT' with the actual Spotify API endpoint you want to use.
-        const playlistsEndpoint = 'https://api.spotify.com/v1/me/playlists';
-        const startPlaybackEndpoint = 'https://api.spotify.com/v1/me/player/play';
-
-        // Function to fetch user playlists
-        function fetchPlaylists() {
-            fetch(playlistsEndpoint, {
-                headers: {
-                    'Authorization': `Bearer ${accessToken}`
-                }
-            })
-            .then(response => response.json())
-            .then(data => {
-                // Handle the received data and update the HTML accordingly
-                const playlistContainer = document.getElementById('playlist-container');
-                
-                // Clear existing content
-                playlistContainer.innerHTML = '';
-
-                // For simplicity, let's assume the response contains an array of playlists
-                data.items.forEach(playlist => {
-                    const playlistElement = document.createElement('div');
-                    playlistElement.textContent = `Playlist: ${playlist.name}`;
-                    playlistContainer.appendChild(playlistElement);
-                });
-            })
-            .catch(error => {
-                console.error('Error fetching playlists from Spotify API:', error);
+  <!-- Bootstrap JS and Popper.js -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+  <script>
+    $(document).ready(function () {
+      // Function to fetch and display user library on page load
+      function fetchUserLibrary() {
+        let url = 'https://api.spotify.com/v1/me/playlists';
+        $.ajax({
+          url: url,
+          headers: {
+            Authorization: "Bearer " + accessToken,
+          },
+          success: function (result) {
+            console.log(result);
+            let container = $('#libraryPlaceholder');
+            container.empty(); // Clear previous results
+            result.items.forEach(function (playlist) {
+              let playlistName = playlist.name;
+              let playlistImageUrl = playlist.images.length > 0 ? playlist.images[0].url : '';
+              let playlistElement = `
+                <div class="playlist-item">
+                  <img src="${playlistImageUrl}" alt="${playlistName}" width="64" height="64">
+                  <p>${playlistName}</p>
+                </div>
+              `;
+              container.append(playlistElement);
             });
-        }
-
-        // Function to start playback on the user's active device
-        function startPlayback() {
-            fetch(startPlaybackEndpoint, {
-                method: 'PUT',
-                headers: {
-                    'Authorization': `Bearer ${accessToken}`,
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    "context_uri": "spotify:album:1Je1IMUlBXcx1Fz0WE7oPT",
-                    "uris": ["spotify:track:4iV5W9uYEdYUVa79Axb7Rh", "spotify:track:1301WleyT98MSxVHPZCA6M"],
-                    "offset": {"position": 5},
-                    "position_ms": 0
-                })
-            })
-            .then(response => {
-                if (response.ok) {
-                    console.log('Playback started successfully');
-                } else {
-                    console.error('Error starting playback:', response.status);
-                }
-            })
-            .catch(error => {
-                console.error('Error starting playback:', error);
-            });
-        }
-
-        // Fetch playlists when the page loads
-        fetchPlaylists();
-    </script>
-
+          },
+          error: function () {
+            alert('Failed to fetch user library!');
+          }
+        });
+      }
+  
+      // Fetch user library on page load
+      fetchUserLibrary();
+  
+      // Add event listener to home button to refresh library data
+      $('#homeButton').on('click', function () {
+        fetchUserLibrary();
+      });
+    });
+  </script>
+  
 </body>
 </html>
