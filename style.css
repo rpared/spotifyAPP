@@ -1,151 +1,169 @@
 @import url('https://fonts.googleapis.com/css2?family=Exo:ital,wght@0,400;0,700;1,400&family=Roboto:wght@100;400;700&display=swap');
 
 .left-frame {
-    min-height: 100vh;
-    background-color: #1a1a1a;
-    color: white;
-    padding: 20px;
-    border-right: 1px solid #282828;
-    position: relative;
-  }
-  .right-frame {
-    min-height: 100vh;
-    background-color: #181818;
-    color: white;
-    padding: 20px;
-  }
-  h1 {
-    font-weight: bold;
-    font-family: 'Roboto', sans-serif;
-  }
-  .btn-primary {
-    background-color: #1DB954;
-    border-color: #1DB954;
-  }
-  .btn-primary:hover {
-    background-color: #1ed760;
-    border-color: #1ed760;
-  }
-  .input-group {
-    margin-bottom: 20px;
-  }
-  .play-group img {
-    width: 25px;
-    height: 25px;
-  }
-  .home-button {
-    display: flex;
-    align-items: center;
-    padding: 10px;
-    cursor: pointer;
-  }
-  .home-button img {
-    width: 24px;
-    height: 24px;
-    margin-right: 10px;
-  }
-  .home-button:hover {
-    background-color: #333333;
-    border-radius: 5px;
-  }
-  .library-placeholder {
-    margin-top: 20px;
-  }
-  .playlist-item {
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
-  }
-  .playlist-item img {
-    margin-right: 10px;
-  }
-  .artist-section {
-    display: flex;
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    padding-bottom: 10px;
-  }
-  .artist-card {
-    flex: 0 0 auto;
-    margin-right: 15px;
-    text-align: center;
-    height: 250px;
-  }
-  .artist-card img {
-    border-radius: 50%;
-    width: 100px;
-    height: 100px;
-  }
-  .player-controls {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background-color: #1DB954;
-    padding: 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 6%;
-    
-  }
-  .player-controls button {
-    margin: 0 10px;
-    height: 30px;
-    width: 30px;
-    align-content: center;
-    background-color: transparent;
-    border: 0 none;
-    
-  }
-  .player-controls button:hover {
-    background-color:transparent;
-  }
-  .user-button {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background-size: cover;
-    border: none;
-    cursor: pointer;
-    /* margin-bottom: 20px;
-    margin-left: 95%; */
-  }
-  #play {
-    
-    width: 25px;
-    height: 25px;
-    
-  }
+  min-height: 100vh;
+  background-color: #1a1a1a;
+  color: white;
+  padding: 20px;
+  border-right: 1px solid #282828;
+  position: relative;
+}
 
-  #pause {
-    
-    width: 25px;
-    height: 25px;
-  }
+.right-frame {
+  min-height: 100vh;
+  background-color: #181818;
+  color: white;
+  padding: 20px;
+}
 
-  #seek {
-    
-    
-    width: 25px;
-    height: 25px;
-  }
+h1, h2 {
+  font-weight: bold;
+  font-family: 'Roboto', sans-serif;
+}
 
-  .user-greeting {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px;
-    border-radius: 5px;
-    width: 100%;
-  }
-  .user-greeting h1 {
-    margin: 0;
-    color: #ffffff; /* Example text color */
-  }
-  .user-greeting img {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    margin-left: auto; /* Push the image to the right */
-  }
+.btn-primary {
+  background-color: #1DB954;
+  border-color: #1DB954;
+}
+
+.btn-primary:hover {
+  background-color: #1ed760;
+  border-color: #1ed760;
+}
+
+.input-group {
+  margin-bottom: 20px;
+}
+
+.play-group img {
+  width: 25px;
+  height: 25px;
+}
+
+.home-button {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.home-button img {
+  width: 24px;
+  height: 24px;
+  margin-right: 10px;
+}
+
+.home-button:hover {
+  background-color: #333333;
+  border-radius: 5px;
+}
+
+.library-placeholder {
+  margin-top: 20px;
+}
+
+.playlist-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.playlist-item img {
+  margin-right: 10px;
+}
+
+.artist-section {
+  display: flex;
+  overflow-x: auto;
+  white-space: nowrap;
+  padding-bottom: 10px;
+}
+
+.artist-card {
+  display: inline-block;
+  margin-right: 20px;
+  text-align: center;
+  height: 250px;
+}
+
+.artist-card img {
+  border-radius: 50%;
+  width: 100px;
+  height: 100px;
+}
+
+.player-controls {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: #1DB954;
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 6%;
+}
+
+.player-controls button {
+  margin: 0 10px;
+  height: 30px;
+  width: 30px;
+  align-content: center;
+  background-color: transparent;
+  border: 0 none;
+}
+
+.player-controls button:hover {
+  background-color: transparent;
+}
+
+.user-button {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-size: cover;
+  border: none;
+  cursor: pointer;
+}
+
+#play {
+  width: 25px;
+  height: 25px;
+}
+
+#pause {
+  width: 25px;
+  height: 25px;
+}
+
+#seek {
+  width: 25px;
+  height: 25px;
+}
+
+.user-greeting {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  border-radius: 5px;
+  width: 100%;
+}
+
+.user-greeting h1 {
+  margin: 0;
+  color: #ffffff; /* Example text color */
+}
+
+.user-greeting img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-left: auto; /* Push the image to the right */
+}
+
+#buttonUser {
+  background-color: transparent;
+  border: 0 none;
+}
