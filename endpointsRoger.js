@@ -16,18 +16,25 @@ $(document).ready(function(){
     };
     let accessToken = $.urlParam("access_token");
 
+    
+
 
 /////User info Endpoint
     $('#buttonUser').on('click', function(){
         let url = `https://api.spotify.com/v1/me`;
+       
             $.ajax({
                 url: url,
                 headers: {
                     Authorization: "Bearer " + accessToken,
                 },
+                
                 success: function(result) {
-                    console.log(result);
-                    $("#result").html("<br>" + result.display_name + "<br>" + "Country: " + result.country + "<br><br>");
+                    if (result.images && result.images.length > 0) {
+                        let userImageUrl = result.images[0].url;
+                        
+                    
+                    $("#result").html("<br><img src=" + userImageUrl  + " width=200 height=200>" + "<br>"  + result.display_name + "<br>" + "Country: " + result.country + "<br><br>");
                     $("#result").append(`<br>`)
                     $("#result").append(`<button id="buttonTracks" class="btn btn-primary" >${result.display_name} Top Track</button>`)
                    
@@ -35,6 +42,10 @@ $(document).ready(function(){
                         console.log("getTopTrack called");
                         getTopTrack();
                         });
+                    $("#result").append(`<br>`)
+                    $("#result").append(`<br>`)
+                    $("#result").append(`<br>`)
+                 }
 
                 },
                 error: function() {
@@ -287,7 +298,7 @@ $('#buttonFav').on('click', function(){
 
             if(searchType == 'artist'){
                 if (response.artists && response.artists.items.length > 0) {
-                    let resultTitle = $("<h3>").html( " Artists search results: ");       
+                    let resultTitle = $("<h3>").html( " Artists search results: ");      
                     resultsContainer.append(resultTitle);
                     let artists = response.artists.items;
                     
